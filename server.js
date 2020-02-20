@@ -5,19 +5,52 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
+const getCurrentLeague = require('./server/getters/getCurrentLeague');
+const getAllExistingTradeMods = require('./server/getters/getAllExistingTradeModifiers');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// API calls
+/*
+    GET
+ */
+
 app.get('/api/hello', (req, res) => {
     res.send({ express: 'Hello From Express' });
 });
 
-app.post('/api/world', (req, res) => {
-    console.log(req.body);
-    res.send(
-        `I received your POST request wajoe. This is what you sent me: ${req.body.post}`,
-    );
+app.get('/api/get-league', (req, res) => {
+    getCurrentLeague.request()
+        .then((body) => {
+            res.send({
+                'body': body
+            });
+        })
+        .catch((err) => {
+            throw err;
+        })
+});
+
+app.get('/api/get-stats', (req, res) => {
+    getAllExistingTradeMods.request()
+    .then((body) => {
+        res.send({
+            'body': body.data
+        });
+    })
+    .catch((err) => {
+        throw err;
+    })
+});
+
+/*
+    POST
+ */
+app.post('/api/get-account', (req, res) => {
+    console.log('get account')
+    res.send({
+                 express: 'Hello From get account'
+             });
 });
 
 if (process.env.NODE_ENV === 'production') {

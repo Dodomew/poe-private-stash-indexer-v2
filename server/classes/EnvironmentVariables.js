@@ -1,5 +1,5 @@
-const getCurrentLeague = require('../getters/getCurrentLeague');
-const getAllStats = require('../getters/getAllExistingTradeModifiers');
+const getCurrentLeague = require('./getters/getCurrentLeague');
+const getAllStats = require('./getters/getAllExistingTradeModifiers');
 let instance = null;
 
 class EnvironmentVariables {
