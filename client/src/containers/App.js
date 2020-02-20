@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 
 import logo from '../resources/icons/logo.svg';
-
+import Form from '../components/Form/Form';
 import './App.css';
 
 class App extends Component {
     state = {
         post: '',
-        accountName: null,
-        sessionID: null,
         league: null,
         stats: null,
     };
@@ -53,14 +51,17 @@ class App extends Component {
         return body;
     };
 
-    postAccountInfo = async(e) => {
-        e.preventDefault();
+    postAccountInfo = async(accountName, sessionID) => {
         const response = await fetch('/api/get-account', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ post: this.state.post }),
+            body: JSON.stringify({
+                'accountName' : accountName,
+                'sessionID' : sessionID,
+                'league' : this.state.league
+            }),
         });
 
         const body = await response.text();
@@ -77,15 +78,7 @@ class App extends Component {
                 <p>
                     {this.state.league}
                 </p>
-                <form onSubmit={this.postAccountInfo}>
-                    <input
-                        type="text"
-                        name="accountName"
-                    />
-                    <button type="submit">
-                        Submit
-                    </button>
-                </form>
+                <Form handleData={this.postAccountInfo}/>
                 <p>{this.state.accountName}</p>
             </div>
         );

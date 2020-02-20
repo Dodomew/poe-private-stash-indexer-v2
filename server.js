@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000;
 
 const getCurrentLeague = require('./server/getters/getCurrentLeague');
 const getAllExistingTradeMods = require('./server/getters/getAllExistingTradeModifiers');
+const getAccountInventory = require('./server/getters/getAccountInventory');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,9 +49,16 @@ app.get('/api/get-stats', (req, res) => {
  */
 app.post('/api/get-account', (req, res) => {
     console.log('get account')
-    res.send({
-                 express: 'Hello From get account'
-             });
+    getAccountInventory.getInventoryPerTab(req.body.accountName, req.body.sessionID, req.body.league)
+    .then((body) => {
+        console.log('got body')
+        console.log(body)
+        // res.send({
+        //     express: 'Hello From get account'
+        // });
+    }).catch((err) => {
+
+    });
 });
 
 if (process.env.NODE_ENV === 'production') {
