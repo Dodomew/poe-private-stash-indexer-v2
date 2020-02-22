@@ -40,7 +40,7 @@
 
 import categorize from "./categorizeItems";
 
-let stack = async (categorizedItems) => {
+let stack = (categorizedItems) => {
 
     let resonators = {};
     let prophecies = {};

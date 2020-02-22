@@ -36,8 +36,8 @@ class App extends Component {
 
     handleStash = async(items) => {
         console.log('HANDLESTASH')
-        const StashHandler = new StashHandler.getInstance();
-        const kek = await StashHandler.initItemsHandler(items);
+        const stashHandler = new StashHandler().getInstance();
+        const kek = await stashHandler.initItemsHandler(items);
     };
 
     getLeague = async() => {
@@ -59,7 +59,12 @@ class App extends Component {
     };
 
     postAccountInfo = async(accountName, sessionID) => {
-        console.log('POSTACCOUNTINFO BEFORE FETCH')
+        console.log('POSTACCOUNTINFO BEFORE FETCH');
+        console.log(JSON.stringify({
+                                       'accountName' : accountName,
+                                       'sessionID' : sessionID,
+                                       'league' : this.state.league
+                                   }));
         const response = await fetch('/api/get-account', {
             method: 'POST',
             headers: {
@@ -71,10 +76,12 @@ class App extends Component {
                 'league' : this.state.league
             }),
         });
-        console.log(response)
+
         console.log('POSTACCOUNTINFO DONE')
 
         const body = await response.json();
+
+        console.log(body);
 
         if (response.status !== 200) {
             throw Error(body.message)

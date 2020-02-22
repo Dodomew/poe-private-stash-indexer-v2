@@ -18,13 +18,14 @@ class StashHandler {
         return instance || new StashHandler();
     }
 
-    async initItemsHandler() {
+    async initItemsHandler(items) {
         console.log('INIT ITEMSHANDLER')
-        const categorizedItems = await categorize();
-        const stackedItems = await stack();
-        console.log('STACKED')
-        console.log(stackedItems)
-        console.log('STACKED END')
+        const categorizedItems = categorize(items);
+        console.log(categorizedItems);
+        // const stackedItems = stack(categorizedItems);
+        // console.log('STACKED BEGIN')
+        // console.log(stackedItems)
+        // console.log('STACKED END')
     }
 }
 

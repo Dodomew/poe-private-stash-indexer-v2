@@ -1,19 +1,24 @@
-let categorize = async (stashItems) => {
+let categorize = (stashItems) => {
     if(!stashItems) {
         console.log('ERROR! stashItems is :');
         console.log(stashItems);
     }
+
+    console.log('INIT CATEGORIZE')
+    stashItems = stashItems.body;
+
+    console.log(stashItems);
 
     let dictionary = {};
     let restrictedItemsArray = ['rings', 'belts', 'amulets', 'quivers', 'armours', 'weapons', 'gems'];
     let pleaseBreakOutOfLoop = false;
 
     for (let i = 0; i < stashItems.length; i++) {
-        for (let j = 0; j < stashItems[i].length; j++) {
+        for (let j = 0; j < stashItems[i].items.length; j++) {
             pleaseBreakOutOfLoop = false;
 
             // dictionary will be filled with categories -> items
-            let item = stashItems[i][j];
+            let item = stashItems[i].items[j];
             let categoryOfItem;
 
             //skip these items
@@ -103,7 +108,7 @@ let categorize = async (stashItems) => {
             }
 
             item.category = categoryOfItem;
-            dictionary[categoryOfItem].push(stashItems[i][j]);
+            dictionary[categoryOfItem].push(item);
         }
     }
 

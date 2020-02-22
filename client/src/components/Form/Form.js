@@ -25,16 +25,18 @@ class Form extends Component {
         });
     }
 
-    handleSubmit() {
+    handleSubmit(e) {
+        e.preventDefault();
         console.log('submit');
         const accountName = this.state.accountName;
         const sessionID = this.state.sessionID;
         this.props.handleData(accountName, sessionID);
+        return false;
     }
 
     render() {
         return (
-            <form method="POST" className="form" onSubmit={this.handleSubmit}>
+            <form method="POST" className="form" onSubmit={(e) => this.handleSubmit(e)}>
                 <label className="form__label">
                     Account name
                 </label>

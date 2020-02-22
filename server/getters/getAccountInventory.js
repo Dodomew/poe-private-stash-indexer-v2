@@ -4,8 +4,8 @@ function buildUrl(accountName, index, league) {
     return `https://www.pathofexile.com/character-window/get-stash-items?accountName=${accountName}&tabIndex=${index}&league=${league}&tabs=1`;
 }
 
-request = async (accountName, sessionID, league) => {
-    console.log('request')
+requestFirstTab = async (accountName, sessionID, league) => {
+    console.log('requestFirstTab')
     const url = buildUrl(accountName, 0, league);
     console.log(url)
 
@@ -25,7 +25,7 @@ request = async (accountName, sessionID, league) => {
 };
 
 getInventoryPerTab = async (accountName, sessionID, league) => {
-    let numberOfTabs = await request(accountName, sessionID, league);
+    let numberOfTabs = await requestFirstTab(accountName, sessionID, league);
     let inventory = [];
 
     for (let i = 0; i < numberOfTabs; i++) {
@@ -45,7 +45,6 @@ getInventoryPerTab = async (accountName, sessionID, league) => {
             throw error;
         });
     }
-
     return inventory;
 };
 
