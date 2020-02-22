@@ -45,7 +45,7 @@ const lookupTable = {
     }
 };
 
-let getAllCategories = async(items) => {
+let getPricesPerCategory = async(items, league) => {
     let poeNinjaItemsArray = [];
     let myCategoriesArray = Object.keys(items);
 
@@ -57,20 +57,20 @@ let getAllCategories = async(items) => {
             poeNinjaItemsArray[i] = { lines: items[category] };
             continue;
         }
-        poeNinjaItemsArray[i] = request(category);
+
+        poeNinjaItemsArray[i] = await requestPricesOfCategory(category, league);
     }
 
     return poeNinjaItemsArray;
-}
+};
 
-let request = async (category) => {
+let requestPricesOfCategory = async (category, league) => {
     let poeNinjaCategory = lookupTable[category]();
-    const response = await fetch('/api/get-poe-ninja-category?category=' + poeNinjaCategory);
+    const response = await fetch('/api/get-poe-ninja-category/' + league + '/' + poeNinjaCategory);
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
-
     return body;
 };
 
-export default getAllCategories;
+export default getPricesPerCategory;

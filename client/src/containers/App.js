@@ -7,9 +7,13 @@ import './App.css';
 
 class App extends Component {
     state = {
-        stashesInventory: null,
+        stashInventory: null,
         league: null,
         stats: null,
+        stashHandler: null,
+        poeNinjaItems: null,
+        isLoading: false,
+        loadingMessage: 'Loading...'
     };
 
     componentDidMount() {
@@ -21,7 +25,7 @@ class App extends Component {
             })
             .catch(err => {
                 console.log(err)
-            })
+            });
 
         this.getStats()
             .then((data) => {
@@ -31,13 +35,32 @@ class App extends Component {
             })
             .catch(err => {
                 console.log(err)
-            })
+            });
+
+        this.setState({
+            stashHandler: new StashHandler().getInstance()
+        })
     }
 
     handleStash = async(items) => {
         console.log('HANDLESTASH')
-        const stashHandler = new StashHandler().getInstance();
-        const kek = await stashHandler.initItemsHandler(items);
+        this.state.stashHandler.setLeague(this.state.league);
+        this.state.stashHandler.setModifiersObject(this.state.stats);
+
+        const categorizedItems = this.state.stashHandler.categorizeItems(items);
+        this.state.stashHandler.stackItems(categorizedItems);
+
+        this.setState({
+            stashInventory: this.state.stashHandler.getMyStashInventory(),
+            loadingMessage: 'Fetching PoeNinja items...'
+        });
+
+        await this.state.stashHandler.requestPoeNinjaItems();
+
+        this.setState({
+            poeNinjaItems: this.state.stashHandler.getPoeNinjaItems(),
+            loadingMessage: 'Almost done!'
+        })
     };
 
     getLeague = async() => {
@@ -60,11 +83,11 @@ class App extends Component {
 
     postAccountInfo = async(accountName, sessionID) => {
         console.log('POSTACCOUNTINFO BEFORE FETCH');
-        console.log(JSON.stringify({
-                                       'accountName' : accountName,
-                                       'sessionID' : sessionID,
-                                       'league' : this.state.league
-                                   }));
+        this.setState({
+            isLoading: true,
+            loadingMessage: 'Fetching your stash inventory...'
+        });
+
         const response = await fetch('/api/get-account', {
             method: 'POST',
             headers: {
@@ -87,6 +110,10 @@ class App extends Component {
             throw Error(body.message)
         }
 
+        this.setState({
+            loadingMessage: 'Received your stash inventory...'
+        });
+
         console.log('POSTACCOUNTINFO HANDLESTASH')
         this.handleStash(body);
     };
@@ -97,8 +124,10 @@ class App extends Component {
                 <p>
                     {this.state.league}
                 </p>
+                <p>
+                    {this.state.loadingMessage}
+                </p>
                 <Form handleData={this.postAccountInfo}/>
-                <p>{this.state.accountName}</p>
             </div>
         );
     }

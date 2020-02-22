@@ -8,6 +8,7 @@ const port = process.env.PORT || 5000;
 const getCurrentLeague = require('./server/getters/getCurrentLeague');
 const getAllExistingTradeMods = require('./server/getters/getAllExistingTradeModifiers');
 const getAccountInventory = require('./server/getters/getAccountInventory');
+const getPoeNinjaCategory = require('./server/getters/getPoeNinjaCategory');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,6 +43,21 @@ app.get('/api/get-stats', (req, res) => {
     .catch((err) => {
         throw err;
     })
+});
+
+app.get('/api/get-poe-ninja-category/:league/:category', function(req, res) {
+    let category = req.params.category;
+    let league = req.params.league;
+
+    getPoeNinjaCategory.request(category, league)
+        .then((body) => {
+            res.send({
+                'body' : body
+             })
+        })
+       .catch((err) => {
+           throw err;
+       })
 });
 
 /*

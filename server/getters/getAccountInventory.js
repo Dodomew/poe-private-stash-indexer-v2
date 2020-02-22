@@ -30,7 +30,6 @@ getInventoryPerTab = async (accountName, sessionID, league) => {
 
     for (let i = 0; i < numberOfTabs; i++) {
         let url = buildUrl(accountName, i, league);
-        console.log(url)
         await axios.get(url, {
             headers: {
                 Referer: 'https://www.pathofexile.com',
