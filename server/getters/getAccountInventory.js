@@ -17,8 +17,7 @@ request = async (accountName, sessionID, league) => {
     })
     .then(async(response) => {
         console.log(response.data.numTabs);
-        const numberOfTabs = response.data.numTabs;
-        return numberOfTabs;
+        return response.data.numTabs;
     })
         .catch(error => {
             throw error;
@@ -31,7 +30,7 @@ getInventoryPerTab = async (accountName, sessionID, league) => {
 
     for (let i = 0; i < numberOfTabs; i++) {
         let url = buildUrl(accountName, i, league);
-
+        console.log(url)
         await axios.get(url, {
             headers: {
                 Referer: 'https://www.pathofexile.com',
@@ -42,6 +41,7 @@ getInventoryPerTab = async (accountName, sessionID, league) => {
             inventory[i] = await response.data;
         })
         .catch(error => {
+            console.log(error);
             throw error;
         });
     }

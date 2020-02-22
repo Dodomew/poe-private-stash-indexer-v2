@@ -52,12 +52,12 @@ app.post('/api/get-account', (req, res) => {
     getAccountInventory.getInventoryPerTab(req.body.accountName, req.body.sessionID, req.body.league)
     .then((body) => {
         console.log('got body')
-        console.log(body)
-        // res.send({
-        //     express: 'Hello From get account'
-        // });
+        // console.log(body)
+        res.send({
+            'body': body
+        });
     }).catch((err) => {
-
+        console.log(err);
     });
 });
 

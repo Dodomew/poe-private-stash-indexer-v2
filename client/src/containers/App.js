@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 import logo from '../resources/icons/logo.svg';
 import Form from '../components/Form/Form';
+import StashHandler from "../resources/js/classes/StashHandler";
 import './App.css';
 
 class App extends Component {
     state = {
-        post: '',
+        stashesInventory: null,
         league: null,
         stats: null,
     };
@@ -33,6 +34,12 @@ class App extends Component {
             })
     }
 
+    handleStash = async(items) => {
+        console.log('HANDLESTASH')
+        const StashHandler = new StashHandler.getInstance();
+        const kek = await StashHandler.initItemsHandler(items);
+    };
+
     getLeague = async() => {
             const response = await fetch('/api/get-league');
             const body = await response.json();
@@ -52,6 +59,7 @@ class App extends Component {
     };
 
     postAccountInfo = async(accountName, sessionID) => {
+        console.log('POSTACCOUNTINFO BEFORE FETCH')
         const response = await fetch('/api/get-account', {
             method: 'POST',
             headers: {
@@ -63,13 +71,17 @@ class App extends Component {
                 'league' : this.state.league
             }),
         });
+        console.log(response)
+        console.log('POSTACCOUNTINFO DONE')
 
-        const body = await response.text();
+        const body = await response.json();
 
-        this.setState({
-            accountName: body.accountName,
-            sessionID: body.sessionID
-        });
+        if (response.status !== 200) {
+            throw Error(body.message)
+        }
+
+        console.log('POSTACCOUNTINFO HANDLESTASH')
+        this.handleStash(body);
     };
 
     render() {
