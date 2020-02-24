@@ -18,9 +18,9 @@ requestFirstTab = async (accountName, sessionID, league) => {
     .then(async(response) => {
         return response.data;
     })
-        .catch(error => {
-            throw error;
-        });
+    .catch(error => {
+        throw error;
+    });
 };
 
 getInventoryPerTab = async (accountName, sessionID, league) => {
@@ -40,13 +40,12 @@ getInventoryPerTab = async (accountName, sessionID, league) => {
         }))
     }
 
-    axios.all(promises).then(function(results) {
-        results.forEach(function(response, index) {
-            inventory.push(response.data);
-        })
+    return await axios.all(promises).then(function(results) {
+        for (let i = 0; i < results.length; i++) {
+            inventory.push(results[i].data);
+        }
+        return inventory;
     });
-
-    return inventory;
 };
 
 module.exports = {

@@ -39,7 +39,7 @@ class App extends Component {
 
         this.setState({
             stashHandler: new StashHandler().getInstance()
-        })
+        });
     }
 
     handleStash = async(items) => {
@@ -58,9 +58,20 @@ class App extends Component {
         await this.state.stashHandler.requestPoeNinjaItems();
 
         this.setState({
-            poeNinjaItems: this.state.stashHandler.getPoeNinjaItems(),
-            loadingMessage: 'Almost done!'
-        })
+            poeNinjaItems: this.state.stashHandler.getPoeNinjaItems()
+        });
+
+        console.log('HANDLESTASH assignValuesToMyItems')
+        this.setState({
+            stashInventory: this.state.stashHandler.assignValuesToMyItems(),
+            loadingMessage: 'Assigning values...'
+        });
+
+        this.setState({
+            loadingMessage: 'All done'
+        });
+
+        console.log(this.state.stashInventory);
     };
 
     getLeague = async() => {
@@ -99,6 +110,8 @@ class App extends Component {
                 'league' : this.state.league
             }),
         });
+
+        console.log(response);
 
         console.log('POSTACCOUNTINFO DONE')
 

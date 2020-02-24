@@ -48,16 +48,22 @@ const lookupTable = {
 let getPricesPerCategory = async(items, league) => {
     let poeNinjaItemsArray = [];
     let myCategoriesArray = Object.keys(items);
+    console.log(myCategoriesArray);
 
     for (let i = 0; i < myCategoriesArray.length; i++) {
         let category = myCategoriesArray[i];
         category = category.toLowerCase();
-
+        console.log(category);
         if(category === 'jewels') {
-            poeNinjaItemsArray[i] = { lines: items[category] };
+            poeNinjaItemsArray[i] = {
+                body: {
+                    lines: items[category]
+                }
+            };
             continue;
         }
 
+        console.log('requestPricesOfCategory')
         poeNinjaItemsArray[i] = await requestPricesOfCategory(category, league);
     }
 

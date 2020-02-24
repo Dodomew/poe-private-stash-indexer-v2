@@ -67,7 +67,7 @@ app.post('/api/get-account', (req, res) => {
     console.log('get account')
     getAccountInventory.getInventoryPerTab(req.body.accountName, req.body.sessionID, req.body.league)
     .then((body) => {
-        console.log('got body')
+        console.log('got body');
         res.send({
             'body': body
         });
