@@ -16,8 +16,7 @@ requestFirstTab = async (accountName, sessionID, league) => {
         }
     })
     .then(async(response) => {
-        console.log(response.data.numTabs);
-        return response.data.numTabs;
+        return response.data;
     })
         .catch(error => {
             throw error;
@@ -25,25 +24,28 @@ requestFirstTab = async (accountName, sessionID, league) => {
 };
 
 getInventoryPerTab = async (accountName, sessionID, league) => {
-    let numberOfTabs = await requestFirstTab(accountName, sessionID, league);
-    let inventory = [];
+    let firstTab = await requestFirstTab(accountName, sessionID, league);
+    let numberOfTabs = firstTab.numTabs;
+    let inventory = [firstTab];
+    let promises = [];
 
-    for (let i = 0; i < numberOfTabs; i++) {
+    //we start at i = 1, because we already got the first tab
+    for (let i = 1; i < numberOfTabs; i++) {
         let url = buildUrl(accountName, i, league);
-        await axios.get(url, {
+        promises.push(axios.get(url, {
             headers: {
                 Referer: 'https://www.pathofexile.com',
                 Cookie: `POESESSID=${sessionID}`
             }
-        })
-        .then(async(response) => {
-            inventory[i] = await response.data;
-        })
-        .catch(error => {
-            console.log(error);
-            throw error;
-        });
+        }))
     }
+
+    axios.all(promises).then(function(results) {
+        results.forEach(function(response, index) {
+            inventory.push(response.data);
+        })
+    });
+
     return inventory;
 };
 
