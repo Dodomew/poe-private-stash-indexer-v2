@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Form from '../components/Form/Form';
+import Form from '../components/Form/FunctionalForm';
 import StashHandler from "../resources/js/classes/StashHandler";
 import './App.css';
 
@@ -30,13 +30,9 @@ const App = () => {
              }),
         });
 
-        console.log(response);
-
         console.log('POSTACCOUNTINFO DONE')
 
         const body = await response.json();
-
-        console.log(body);
 
         if (response.status !== 200) {
             throw Error(body.message)
@@ -53,6 +49,7 @@ const App = () => {
         console.log('HANDLESTASH')
         stashHandler.setLeague(league);
         stashHandler.setModifiersObject(stats);
+
         const categorizedItems = stashHandler.categorizeItems(items);
         stashHandler.stackItems(categorizedItems);
 
@@ -63,8 +60,8 @@ const App = () => {
 
         setPoeNinjaItems(stashHandler.getPoeNinjaItems());
         setStashInventory(stashHandler.assignValuesToMyItems());
-
         setLoadingMessage('All done');
+
     };
 
     useEffect(() => {

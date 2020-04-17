@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 const lookupTable = {
     "prophecies": function() {
         return "Prophecy";
