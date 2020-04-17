@@ -12,8 +12,59 @@ const App = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState('Loading...');
 
-    const handleStashInventory = () => {
+    const postAccountInfo = async(accountName, sessionID) => {
+        console.log('POSTACCOUNTINFO BEFORE FETCH');
 
+        setIsLoading(true);
+        setLoadingMessage('Fetching your stash inventory...');
+
+        const response = await fetch('/api/get-account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                 'accountName' : accountName,
+                 'sessionID' : sessionID,
+                 'league' : league
+             }),
+        });
+
+        console.log(response);
+
+        console.log('POSTACCOUNTINFO DONE')
+
+        const body = await response.json();
+
+        console.log(body);
+
+        if (response.status !== 200) {
+            throw Error(body.message)
+        }
+
+        setLoadingMessage('Received your stash inventory...');
+
+        console.log('POSTACCOUNTINFO HANDLESTASH')
+
+        await updateStashHandler(body);
+    };
+
+    const updateStashHandler = async(items) => {
+        console.log('HANDLESTASH')
+        stashHandler.setLeague(league);
+        stashHandler.setModifiersObject(stats);
+        const categorizedItems = stashHandler.categorizeItems(items);
+        stashHandler.stackItems(categorizedItems);
+
+        setStashInventory(stashHandler.getMyStashInventory());
+        setLoadingMessage('Fetching PoeNinja items...');
+
+        await stashHandler.requestPoeNinjaItems();
+
+        setPoeNinjaItems(stashHandler.getPoeNinjaItems());
+        setStashInventory(stashHandler.assignValuesToMyItems());
+
+        setLoadingMessage('All done');
     };
 
     useEffect(() => {
@@ -35,13 +86,15 @@ const App = () => {
             return body;
         };
 
+        setStashHandler(new StashHandler().getInstance());
+
         getLeague()
             .then((data) => {
                 setLeague(data.body.result[0].id);
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
 
         getStats()
             .then((data) => {
@@ -49,8 +102,8 @@ const App = () => {
             })
             .catch(err => {
                 console.log(err);
-            })
-    });
+            });
+    }, []);
 
     return (
         <div className="App">
@@ -60,7 +113,7 @@ const App = () => {
             <p>
                 {loadingMessage}
             </p>
-            {/*<Form handleData={this.postAccountInfo}/>*/}
+            <Form handleData={postAccountInfo}/>
         </div>
     )
 };
