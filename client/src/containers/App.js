@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-import logo from '../resources/icons/logo.svg';
 import Form from '../components/Form/Form';
 import StashHandler from "../resources/js/classes/StashHandler";
 import './App.css';
