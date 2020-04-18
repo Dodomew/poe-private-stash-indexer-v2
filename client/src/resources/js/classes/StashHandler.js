@@ -71,7 +71,7 @@ class StashHandler {
                     item.chaosValue = 1337;
                     continue;
                 }
-                this.findMyItemInPoeNinjaArray(item, i);
+                this.assignValueToMyItemInPoeNinjaArray(item, i);
             }
         }
 
@@ -79,7 +79,7 @@ class StashHandler {
             organizedItemsArray[i].sort(this.compareCurrencyValue);
         }
 
-        return organizedItemsArray;
+        //return organizedItemsArray;
     }
 
     compareCurrencyValue(item1, item2) {
@@ -96,7 +96,7 @@ class StashHandler {
         return 0;
     }
 
-    findMyItemInPoeNinjaArray(item, startIndex) {
+    assignValueToMyItemInPoeNinjaArray(item, startIndex) {
         let itemName = item.typeLine;
 
         for (let i = startIndex; i < this.poeNinjaItems.length; i++) {

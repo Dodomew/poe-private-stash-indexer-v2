@@ -1,101 +1,60 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '../components/Form/Form';
 import StashHandler from "../resources/js/classes/StashHandler";
 import './App.css';
+import List from "../components/List/List";
 
-class App extends Component {
-    state = {
-        stashInventory: null,
-        league: null,
-        stats: null,
-        stashHandler: null,
-        poeNinjaItems: null,
-        isLoading: false,
-        loadingMessage: 'Loading...'
-    };
+const App = () => {
+        const myStashInventory = useRef(null);
+    const [league, setLeague] = useState(null);
+    const [stats, setStats] = useState(null);
+    const [stashHandler, setStashHandler] = useState(null);
+    const [poeNinjaItems, setPoeNinjaItems] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [loadingMessage, setLoadingMessage] = useState('Loading...');
 
-    componentDidMount() {
-        this.getLeague()
-            .then((data) => {
-                this.setState({
-                    league: data.body.result[0].id
-                })
-            })
-            .catch(err => {
-                console.log(err)
-            });
-
-        this.getStats()
-            .then((data) => {
-                this.setState({
-                    stats: data.body.result
-                })
-            })
-            .catch(err => {
-                console.log(err)
-            });
-
-        this.setState({
-            stashHandler: new StashHandler().getInstance()
-        });
-    }
-
-    handleStash = async(items) => {
-        console.log('HANDLESTASH')
-        this.state.stashHandler.setLeague(this.state.league);
-        this.state.stashHandler.setModifiersObject(this.state.stats);
-
-        const categorizedItems = this.state.stashHandler.categorizeItems(items);
-        this.state.stashHandler.stackItems(categorizedItems);
-
-        this.setState({
-            stashInventory: this.state.stashHandler.getMyStashInventory(),
-            loadingMessage: 'Fetching PoeNinja items...'
-        });
-
-        await this.state.stashHandler.requestPoeNinjaItems();
-
-        this.setState({
-            poeNinjaItems: this.state.stashHandler.getPoeNinjaItems()
-        });
-
-        console.log('HANDLESTASH assignValuesToMyItems')
-        this.setState({
-            stashInventory: this.state.stashHandler.assignValuesToMyItems(),
-            loadingMessage: 'Assigning values...'
-        });
-
-        this.setState({
-            loadingMessage: 'All done'
-        });
-
-        console.log(this.state.stashInventory);
-    };
-
-    getLeague = async() => {
+    //first time render
+    useEffect(() => {
+        const getLeague = async() => {
             const response = await fetch('/api/get-league');
             const body = await response.json();
 
             if (response.status !== 200) throw Error(body.message);
 
             return body;
-    };
+        };
 
-    getStats = async() => {
-        const response = await fetch('/api/get-stats');
-        const body = await response.json();
+        const getStats = async() => {
+            const response = await fetch('/api/get-stats');
+            const body = await response.json();
 
-        if (response.status !== 200) throw Error(body.message);
+            if (response.status !== 200) throw Error(body.message);
 
-        return body;
-    };
+            return body;
+        };
 
-    postAccountInfo = async(accountName, sessionID) => {
-        console.log('POSTACCOUNTINFO BEFORE FETCH');
-        this.setState({
-            isLoading: true,
-            loadingMessage: 'Fetching your stash inventory...'
-        });
+        setStashHandler(new StashHandler().getInstance());
+
+        getLeague()
+            .then((data) => {
+                setLeague(data.body.result[0].id);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        getStats()
+            .then((data) => {
+                setStats(data.body.result);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
+    const postAccountInfo = async(accountName, sessionID) => {
+        setIsLoading(true);
+        setLoadingMessage('Fetching your stash inventory...');
 
         const response = await fetch('/api/get-account', {
             method: 'POST',
@@ -103,45 +62,65 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'accountName' : accountName,
-                'sessionID' : sessionID,
-                'league' : this.state.league
-            }),
+                 'accountName' : accountName,
+                 'sessionID' : sessionID,
+                 'league' : league
+             }),
         });
 
-        console.log(response);
-
-        console.log('POSTACCOUNTINFO DONE')
-
         const body = await response.json();
-
-        console.log(body);
 
         if (response.status !== 200) {
             throw Error(body.message)
         }
 
-        this.setState({
-            loadingMessage: 'Received your stash inventory...'
-        });
+        setLoadingMessage('Received your stash inventory...');
 
-        console.log('POSTACCOUNTINFO HANDLESTASH')
-        this.handleStash(body);
+        await updateStashHandler(body);
     };
 
-    render() {
-        return (
-            <div className="App">
-                <p>
-                    {this.state.league}
-                </p>
-                <p>
-                    {this.state.loadingMessage}
-                </p>
-                <Form handleData={this.postAccountInfo}/>
-            </div>
-        );
-    }
-}
+    const updateStashHandler = async(items) => {
+        stashHandler.setLeague(league);
+        stashHandler.setModifiersObject(stats);
+
+        const categorizedItems = stashHandler.categorizeItems(items);
+        stashHandler.stackItems(categorizedItems);
+        setLoadingMessage('Fetching PoeNinja items...');
+
+        await stashHandler.requestPoeNinjaItems();
+
+        setPoeNinjaItems(stashHandler.getPoeNinjaItems());
+        stashHandler.assignValuesToMyItems();
+        myStashInventory.current = stashHandler.getMyStashInventory();
+        setLoadingMessage('All done');
+    };
+
+    const renderForm = () => {
+        return(
+            <Form handleData={postAccountInfo}/>
+          )
+    };
+
+    const renderList = () => {
+        const myStashInventoryArray = Object.keys(myStashInventory.current);
+        return myStashInventoryArray.map((category) => {
+            return(
+                <List key={category} items={myStashInventory.current[category]} isLoading={false}/>
+            )
+        });
+    };
+
+    return (
+        <div className="App">
+            <p>
+                {league}
+            </p>
+            <p>
+                {loadingMessage}
+            </p>
+            {myStashInventory.current === null ? renderForm() : renderList()}
+        </div>
+    )
+};
 
 export default App;
