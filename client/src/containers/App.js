@@ -3,6 +3,7 @@ import Form from '../components/Form/Form';
 import StashHandler from "../resources/js/classes/StashHandler";
 import './App.css';
 import List from "../components/List/List";
+import FormContainer from "../components/Form/FormContainer";
 
 const App = () => {
         const myStashInventory = useRef(null);
@@ -97,7 +98,7 @@ const App = () => {
 
     const renderForm = () => {
         return(
-            <Form handleData={postAccountInfo}/>
+            <FormContainer handleData={postAccountInfo}/>
           )
     };
 

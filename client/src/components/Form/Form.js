@@ -1,26 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const Form = (props) => {
-    const [accountName, setAccountName] = useState(null);
-    const [sessionID, setSessionID] = useState(null);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log('submit');
-        props.handleData(accountName, sessionID);
-        return false;
-    };
-
-    const handleAccountNameChange = (event) => {
-        setAccountName(event.target.value);
-    };
-
-    const handleSessionIDChange = (event) => {
-        setSessionID(event.target.value);
-    };
-
     return (
-        <form method="POST" className="form" onSubmit={handleSubmit}>
+        <form method="POST" className="form" onSubmit={e => (props.onSubmitHandler(e))}>
             <label className="form__label">
                 Account name
             </label>
@@ -28,7 +10,7 @@ const Form = (props) => {
                 type="text"
                 name="accountName"
                 className="form__input"
-                onChange={handleAccountNameChange}
+                onChange={e => (props.onAccountNameHandler(e))}
                 required />
             <label className="form__label">
                 Session ID
@@ -37,7 +19,7 @@ const Form = (props) => {
                 type="text"
                 name="sessionID"
                 className="form__input"
-                onChange={handleSessionIDChange}
+                onChange={e => (props.onSessionIDHandler(e))}
                 required />
             <button type="submit" className="form__submit">
                 Submit
