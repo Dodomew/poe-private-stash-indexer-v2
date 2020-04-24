@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Form from "./Form";
 
-const FormContainer = (props) => {
+const FormController = (props) => {
     const [accountName, setAccountName] = useState(null);
     const [sessionID, setSessionID] = useState(null);
 
@@ -29,4 +29,4 @@ const FormContainer = (props) => {
     )
 };
 
-export default FormContainer;
+export default FormController;
