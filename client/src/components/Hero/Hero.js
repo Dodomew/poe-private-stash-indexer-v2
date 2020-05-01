@@ -3,7 +3,12 @@ import React from 'react';
 const Hero = (props) => {
     return (
         <div className="hero">
-            <h1>Some hero</h1>
+            <h1>
+                {props.league}
+            </h1>
+            <p>
+                {props.loadingMessage}
+            </p>
         </div>
     );
 };
