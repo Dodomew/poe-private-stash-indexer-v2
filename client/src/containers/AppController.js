@@ -55,8 +55,6 @@ const AppController = () => {
         }
 
         setLoadingMessage('Received your stash inventory...');
-        // setResult(true);
-        // await updateStashHandler(body);
         setMyStashInventory(body);
 
         if(body !== null || undefined) {
@@ -68,24 +66,9 @@ const AppController = () => {
         setLoadingMessage(newText);
     }
 
-    const renderForm = () => {
-        return(
-            <FormController handleData={postAccountInfo}/>
-        )
-    };
-
-    // const renderList = () => {
-    //     const myStashInventoryArray = Object.keys(myStashInventory.current);
-    //     return myStashInventoryArray.map((category) => {
-    //         return(
-    //             <List key={category} category={category} items={myStashInventory.current[category]} isLoading={false}/>
-    //         )
-    //     });
-    // };
-
     const appState = () => {
         return(
-            <div>
+            <div className="main">
                 <HeroController league={league} loadingMessage={loadingMessage}/>
                 {
                     resultIsActive ? 

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import StashHandler from "../../resources/js/classes/StashHandler";
+import List from "../Result/Content/List/List";
+import Content from "../Result/Content/Content";
 
 const ResultController = (props) => {
     const [stashHandler, setStashHandler] = useState(null);
     const [loadingMessage, setLoadingMessage] = useState(null);
     const [stats, setStats] = useState(null);
-    const [poeNinjaItems, setPoeNinjaItems] = useState(null);
+    const [myStashInventory, setMyStashInventory] = useState(null);
 
     //first time render
     useEffect(() => {
@@ -61,12 +63,12 @@ const ResultController = (props) => {
 
     const requestPoeNinjaItems = async() => {
         await stashHandler.requestPoeNinjaItems();
-        setPoeNinjaItems(stashHandler.getPoeNinjaItems());
     }
 
     const setValuesOnMyItems = () => {
         stashHandler.assignValuesToMyItems();
         setLoadingMessage('All done');
+        setMyStashInventory(stashHandler.getMyStashInventory());
     }
 
     const init = async() => {
@@ -77,9 +79,9 @@ const ResultController = (props) => {
     }
 
     return (
-        <h1>
-            I am result
-        </h1>
+      <div className="content">
+          <Content items={myStashInventory}/>
+      </div>
     )
 };
 
