@@ -1,0 +1,15 @@
+.hero {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #fff;
+    max-width: 580px;
+    margin: 0 auto 30px;
+
+    &__title {
+        font-size: 24px;
+    }
+
+    &__message {
+        font-size: 18px;
+    }
+}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import FormController from "../components/Form/FormController";
-import List from "../components/Result/Content/List/List";
-import HeroController from "../components/Hero/HeroController";
-import ResultController from "../components/Result/ResultController";
+import FormController from "../../components/Form/FormController";
+import HeroController from "../../components/Hero/HeroController";
+import ResultController from "../../components/Result/ResultController";
+import './appController.scss';
 
 const AppController = () => {
     // const myStashInventory = useRef(null);
@@ -78,7 +78,7 @@ const AppController = () => {
                                 loadingMessageHandler={loadingMessageHandler}
                             />
                         :
-                            <FormController handleData={postAccountInfo}/>
+                            <FormController handleData={postAccountInfo} isLoading={isLoading}/>
                 }           
             </div>
         )

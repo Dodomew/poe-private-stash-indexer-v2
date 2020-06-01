@@ -25,6 +25,7 @@ const FormController = (props) => {
             onSubmitHandler={handleSubmit}
             onAccountNameHandler={handleAccountNameChange}
             onSessionIDHandler={handleSessionIDChange}
+            isLoading={props.isLoading}
         />
     )
 };

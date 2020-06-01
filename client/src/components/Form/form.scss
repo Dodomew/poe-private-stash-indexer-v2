@@ -1,0 +1,27 @@
+.form {
+    max-width: 380px;
+    margin: 0 auto;
+
+    &__container {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+
+        & + & {
+            margin-bottom: 30px;
+        }
+    }
+
+    &__submit {
+        width: 100%;
+        padding: 10px;
+    }
+
+    &__input {
+        padding: 5px;
+        min-width: 200px;
+        font-size: 14px;
+    }
+}

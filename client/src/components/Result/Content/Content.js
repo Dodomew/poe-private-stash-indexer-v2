@@ -1,9 +1,14 @@
 import React from 'react';
 import List from "../Content/List/List";
+import './content.scss';
 
 const Content = (props) => {
     if(!props.items) {
-        return null;
+        return (
+            <div>
+                Loading...
+            </div>
+        );
     }
     else {
         const myStashInventory = props.items;
