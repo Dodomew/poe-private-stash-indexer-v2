@@ -4,11 +4,9 @@ import './content.scss';
 
 const Content = (props) => {
     if(!props.items) {
-        return (
-            <div>
-                Loading...
-            </div>
-        );
+        return(
+            <List key="skeleton-list" isLoading={true}/>
+        )
     }
     else {
         const myStashInventory = props.items;

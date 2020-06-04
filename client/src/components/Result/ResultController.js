@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import StashHandler from "../../resources/js/classes/StashHandler";
-import List from "../Result/Content/List/List";
+import Sidebar from "../Result/Sidebar/Sidebar";
 import Content from "../Result/Content/Content";
 
 const ResultController = (props) => {
@@ -31,6 +31,7 @@ const ResultController = (props) => {
             });
     }, [])
 
+    //only init first time
     useEffect(() => {
         if(stashHandler) {
             init();
@@ -80,6 +81,7 @@ const ResultController = (props) => {
 
     return (
       <div className="content">
+          <Sidebar items={myStashInventory}/>
           <Content items={myStashInventory}/>
       </div>
     )

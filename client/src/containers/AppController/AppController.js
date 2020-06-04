@@ -57,7 +57,6 @@ const AppController = () => {
             throw Error(body.message)
         }
 
-        setLoadingMessage('Received your stash inventory...');
         setMyStashInventory(body);
 
         if(body !== null || undefined) {
@@ -73,9 +72,9 @@ const AppController = () => {
         return(
             <div className="main">
                 <HeroController 
-                league={league} 
-                loadingMessage={loadingMessage}
-                hasLeagueBeenFetched={hasLeagueBeenFetched}/>
+                    league={league} 
+                    loadingMessage={loadingMessage}
+                    hasLeagueBeenFetched={hasLeagueBeenFetched}/>
                 {
                     resultIsActive ? 
                             <ResultController 
