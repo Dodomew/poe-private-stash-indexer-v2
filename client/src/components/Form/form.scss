@@ -1,6 +1,11 @@
 .form {
     max-width: 380px;
     margin: 0 auto;
+    transition: opacity 0.25s;
+
+    &.is-loading {
+        opacity: 0;
+    }
 
     &__container {
         display: flex;

@@ -3,7 +3,7 @@ import './hero.scss'
 
 const Hero = (props) => {
     return (
-        <div className="hero">
+        <div className={'hero' + (props.hasLeagueBeenFetched ? '' : ' is-loading')}>
             <h1 className="hero__title">
                 {props.league}
             </h1>

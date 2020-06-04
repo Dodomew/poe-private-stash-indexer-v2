@@ -8,6 +8,7 @@ const AppController = () => {
     // const myStashInventory = useRef(null);
     const [myStashInventory, setMyStashInventory] = useState(null);
     const [league, setLeague] = useState(null);
+    const [hasLeagueBeenFetched, setLeagueFetched] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState(null);
     const [resultIsActive, setResult] = useState(false);
@@ -26,6 +27,8 @@ const AppController = () => {
         getLeague()
             .then((data) => {
                 setLeague(data.body.result[0].id);
+                setLeagueFetched(true);
+                setLoadingMessage('Ready');
             })
             .catch(err => {
                 console.log(err);
@@ -69,7 +72,10 @@ const AppController = () => {
     const appState = () => {
         return(
             <div className="main">
-                <HeroController league={league} loadingMessage={loadingMessage}/>
+                <HeroController 
+                league={league} 
+                loadingMessage={loadingMessage}
+                hasLeagueBeenFetched={hasLeagueBeenFetched}/>
                 {
                     resultIsActive ? 
                             <ResultController 

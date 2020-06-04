@@ -6,6 +6,7 @@ const HeroController = (props) => {
         <Hero 
             league={props.league}
             loadingMessage={props.loadingMessage}
+            hasLeagueBeenFetched={props.hasLeagueBeenFetched}
         />
     )
 };

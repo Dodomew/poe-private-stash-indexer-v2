@@ -3,7 +3,9 @@ import './form.scss';
 
 const Form = (props) => {
     return (
-        <form method="POST" className="form" onSubmit={e => (props.onSubmitHandler(e))}>
+        <form method="POST" 
+              className={'form' + (props.isLoading ? ' is-loading' : '')}
+              onSubmit={e => (props.onSubmitHandler(e))}>
             <div className="form__container">
                 <label className="form__label">
                     Account name
