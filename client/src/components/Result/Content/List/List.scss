@@ -32,4 +32,14 @@
     &__value {
         margin-left: 10px;
     }
+
+    &__toggle {
+        margin-left: auto;
+    }
+
+    &__accordion { 
+        list-style-type: none;
+        max-height: 0;
+        overflow: hidden;
+    }
 }

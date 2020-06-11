@@ -7,9 +7,6 @@ const Content = (props) => {
 
     if(!props.items) {
         content = <List key="skeleton-list" isLoading={true}/>;
-        // return(
-        //     <List key="skeleton-list" isLoading={true}/>
-        // )
     }
     else {
         const myStashInventory = props.items;
