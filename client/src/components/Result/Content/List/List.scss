@@ -39,7 +39,16 @@
 
     &__accordion { 
         list-style-type: none;
-        max-height: 0;
+        // max-height: 0;
         overflow: hidden;
+        transition: max-height 0.5s;
+
+        .is-closed & {
+            max-height: 0px;
+        }
+
+        // .is-expanded & {
+        //     max-height: 200px;
+        // }
     }
 }

@@ -1,13 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import Accordion from './Accordion/Accordion';
 import ListItem from './ListItem';
 
 const ListItemController = (props) => {
-    const [isExpanded, toggleExpansion] = useState(false);
+    const listItemRef = createRef();
+    const [isExpanded, toggleExpansion] = useState(true);
+    const [height, setHeight] = useState(null)
+
+    useEffect(() => {
+        if(listItemRef.current) {
+            setHeight(listItemRef.current.offsetHeight + 'px');
+        }
+        toggleExpansion(false);
+    }, []);
 
     function toggleAccordion() {
         toggleExpansion(!isExpanded);
-        console.log('toggle accordion')
     }
 
     const item = props.item;
@@ -21,10 +29,13 @@ const ListItemController = (props) => {
     const itemMods = item.explicitMods ?? null;
 
     const accordion = itemMods ? 
-        <Accordion 
-            itemMods={itemMods} 
-            itemName={itemName}
-        /> 
+            <div ref={listItemRef} className="listitem__accordion" style={{height: height}}>
+                <Accordion 
+                    itemMods={itemMods} 
+                    itemName={itemName}
+                    height={height}
+                />
+            </div> 
     : null;
 
     const accordionToggle = itemMods ?
@@ -45,6 +56,7 @@ const ListItemController = (props) => {
             itemMods={itemMods}
             accordion={accordion}
             accordionToggle={accordionToggle}
+            isExpanded={isExpanded}
         />
     )
 }

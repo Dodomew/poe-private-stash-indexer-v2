@@ -26,7 +26,7 @@ const List = (props) => {
     }
 
     return (
-        <ul className={'list' + (props.isLoading ? ' is-loading' : '')}>
+        <ul className={'list' + (props.isLoading ? ' is-loading' : '')} data-category={props.category}>
             {listItems}
         </ul>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 
 const ListItem = (props) => {
     return (
-        <li key={props.itemKey} className={'listitem'}>
+        <li key={props.itemKey} className={'listitem ' + (!props.isExpanded ? 'is-closed' : '')}>
             <div className="listitem__content">
                 <img 
                     src={props.itemIcon} 

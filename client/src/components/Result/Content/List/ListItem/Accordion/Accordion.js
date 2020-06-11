@@ -16,11 +16,9 @@ const Accordion = (props) => {
         })
 
         accordion = 
-            <div className="listitem__accordion">
-                <ul>
-                    {accordion}
-                </ul>
-            </div>
+            <ul>
+                {accordion}
+            </ul>
     }
 
     return accordion;
