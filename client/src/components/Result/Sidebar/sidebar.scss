@@ -1,0 +1,21 @@
+.sidebar {
+    position: sticky;
+    top: 50px;
+    max-width: 240px;
+    margin-right: 20px;
+}
+
+.sidebar-list {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 10px;
+    margin: 0;
+    list-style-type: none;
+
+    &__item {
+        font-size: 18px;
+        padding: 5px 15px;
+        margin-bottom: 10px;
+        border: 1px solid #fff;
+    }
+}

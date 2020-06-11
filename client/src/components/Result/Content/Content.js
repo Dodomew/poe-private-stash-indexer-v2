@@ -3,20 +3,29 @@ import List from "../Content/List/List";
 import './content.scss';
 
 const Content = (props) => {
+    let content;
+
     if(!props.items) {
-        return(
-            <List key="skeleton-list" isLoading={true}/>
-        )
+        content = <List key="skeleton-list" isLoading={true}/>;
+        // return(
+        //     <List key="skeleton-list" isLoading={true}/>
+        // )
     }
     else {
         const myStashInventory = props.items;
         const myStashInventoryArray = Object.keys(myStashInventory);
-        return myStashInventoryArray.map((category) => {
+        content = myStashInventoryArray.map((category) => {
             return(
                 <List key={category} category={category} items={myStashInventory[category]} isLoading={false}/>
             )
         });
     }
+
+    return(
+        <div className="result">
+            {content}
+        </div>
+    )
 };
 
 export default Content;

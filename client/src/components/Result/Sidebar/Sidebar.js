@@ -1,22 +1,31 @@
 import React from 'react';
+import './sidebar.scss';
 
 const Sidebar = (props) => {
+    let sidebar;
+
     if(!props.items) {
-        return(
-            <div>Category</div>
-        )
+        sidebar = <li key={'category'}>Category123</li>
     }
     else {
         const myStashInventory = props.items;
         const myStashInventoryArray = Object.keys(myStashInventory);
-        return myStashInventoryArray.map((category) => {
+        sidebar = myStashInventoryArray.map((category) => {
             return(
-                <div>
+                <li key={category} className="sidebar-list__item">
                     {category}
-                </div>
+                </li>
             )
         });
     }
+
+    return(
+        <div className="sidebar">
+            <ul className="sidebar-list">
+                {sidebar}
+            </ul>
+        </div>
+    )
 }
 
 export default Sidebar;

@@ -1,4 +1,10 @@
 .content {
     max-width: 980px;
     margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+}
+
+.result {
+    flex: 1 0 auto;
 }
