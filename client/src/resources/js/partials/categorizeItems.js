@@ -10,7 +10,7 @@ let categorize = (stashItems) => {
     console.log(stashItems);
 
     let dictionary = {};
-    let restrictedItemsArray = ['rings', 'belts', 'amulets', 'quivers', 'armours', 'weapons', 'gems'];
+    let restrictedItemsArray = ['rings', 'belts', 'amulets', 'quivers', 'armours', 'weapons', 'gems', 'jewels'];
     let pleaseBreakOutOfLoop = false;
 
     for (let i = 0; i < stashItems.length; i++) {
@@ -49,57 +49,9 @@ let categorize = (stashItems) => {
                 item.explicitMods = explicitMods;
             }
 
-            if(isJewel(item)) {
-                categoryOfItem = 'jewels';
-            }
+            categoryOfItem = assignCategoryToItem(item);
 
-            // prophecies have the currency category; i create prophecy category
-            else if(isProphecy(item)) {
-                categoryOfItem = 'prophecies';
-            }
-
-            //breach splinter is no longer a fragment, but currency (poeninja)
-            else if(isBreachSplinter(item)) {
-                categoryOfItem = 'currency';
-            }
-
-            else if(isDivCard(item)) {
-                categoryOfItem = 'divination cards';
-            }
-
-            else if(isFragment(item)) {
-                categoryOfItem = 'fragments';
-            }
-
-            else if(isOil(item)) {
-                categoryOfItem = 'oils';
-            }
-
-            else if(isEssence(item)) {
-                categoryOfItem = 'essences';
-            }
-
-            else if(isFossil(item)) {
-                categoryOfItem = 'fossils';
-            }
-
-            else if(isResonator(item)) {
-                categoryOfItem = 'resonators';
-            }
-
-            else if(isScarab(item)) {
-                categoryOfItem = 'scarabs';
-            }
-
-            else if(isIncubator(item)) {
-                categoryOfItem = 'incubator';
-            }
-
-            else if(isCurrency(item, categoryOfItem)) {
-                categoryOfItem = 'currency';
-            }
-
-            else if(categoryOfItem === undefined) {
+            if(categoryOfItem === undefined) {
                 continue;
             }
 
@@ -193,9 +145,57 @@ function isJewel(item) {
     }
 }
 
-function isCurrency(item, categoryOfItem) {
-    if(item.icon.toLowerCase().indexOf('currency') !== -1 && categoryOfItem === undefined) {
+function isCurrency(item) {
+    if(item.icon.toLowerCase().indexOf('currency') !== -1) {
         return true;
+    }
+}
+
+function assignCategoryToItem(item, categoryOfItem) {
+    // prophecies have the currency category; i create prophecy category
+    if(isProphecy(item)) {
+        return 'prophecies';
+    }
+
+    //breach splinter is no longer a fragment, but currency (poeninja)
+    else if(isBreachSplinter(item)) {
+        return 'currency';
+    }
+
+    else if(isDivCard(item)) {
+        return 'divination cards';
+    }
+
+    else if(isFragment(item)) {
+        return 'fragments';
+    }
+
+    else if(isOil(item)) {
+        return 'oils';
+    }
+
+    else if(isEssence(item)) {
+        return 'essences';
+    }
+
+    else if(isFossil(item)) {
+        return 'fossils';
+    }
+
+    else if(isResonator(item)) {
+        return 'resonators';
+    }
+
+    else if(isScarab(item)) {
+        return 'scarabs';
+    }
+
+    else if(isIncubator(item)) {
+        return 'incubator';
+    }
+
+    else if(isCurrency(item)) {
+        return 'currency';
     }
 }
 
