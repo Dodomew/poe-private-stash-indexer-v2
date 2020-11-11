@@ -4,8 +4,12 @@ import './sidebar.scss';
 const Sidebar = (props) => {
     let sidebar;
 
+    const clickHandler = (category) => {
+        props.handleActiveCategory(category);
+    }
+
     if(!props.items) {
-        sidebar = <li key={'category'}>Category123</li>
+        sidebar = <li key={'category'}>Determining categories...</li>
     }
     else {
         const myStashInventory = props.items;
@@ -13,7 +17,9 @@ const Sidebar = (props) => {
         sidebar = myStashInventoryArray.map((category) => {
             return(
                 <li key={category} className="sidebar-list__item">
-                    {category}
+                    <button onClick={() => clickHandler(category)}>
+                        {category}
+                    </button>
                 </li>
             )
         });

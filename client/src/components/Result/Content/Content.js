@@ -13,7 +13,13 @@ const Content = (props) => {
         const myStashInventoryArray = Object.keys(myStashInventory);
         content = myStashInventoryArray.map((category) => {
             return(
-                <List key={category} category={category} items={myStashInventory[category]} isLoading={false}/>
+                <List 
+                    key={category} 
+                    category={category} 
+                    items={myStashInventory[category]} 
+                    isLoading={false}
+                    activeCategory={props.activeCategory}
+                />
             )
         });
     }

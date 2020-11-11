@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ListItemController from './ListItem/ListItemController';
 import './List.scss';
 
 const List = (props) => {
     let listItems;
 
+    useEffect(() => {
+        if(!props.activeCategory) {
+            console.log('i render now')
+        }
+    }, [])
+
     if(props.isLoading) {
         listItems = [];
         for (let i = 0; i < 8; i++) {
             listItems.push(
-                <li key={'item_' + i} className="listitem">Loading...</li>
+                <li key={'item_' + i} className="listitem">
+                Loading...
+                </li>
             )
         }
     }
@@ -26,7 +34,10 @@ const List = (props) => {
     }
 
     return (
-        <ul className={'list' + (props.isLoading ? ' is-loading' : '')} data-category={props.category}>
+        <ul 
+            className={'list' + (props.isLoading ? ' is-loading' : '') + (props.activeCategory === props.category ? ' is-active' : "")} 
+            data-category={props.category}
+        >
             {listItems}
         </ul>
     );

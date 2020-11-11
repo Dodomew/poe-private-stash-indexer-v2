@@ -8,6 +8,7 @@ const ResultController = (props) => {
     const [loadingMessage, setLoadingMessage] = useState(null);
     const [stats, setStats] = useState(null);
     const [myStashInventory, setMyStashInventory] = useState(null);
+    const [activeCategory, setActiveCategory] = useState(null);
 
     //first time render
     useEffect(() => {
@@ -79,10 +80,20 @@ const ResultController = (props) => {
         setValuesOnMyItems();
     }
 
+    const handleActiveCategory = (category) => {
+        setActiveCategory(category);
+    }
+
     return (
       <div className="content">
-          <Sidebar items={myStashInventory}/>
-          <Content items={myStashInventory}/>
+          <Sidebar 
+            items={myStashInventory}
+            handleActiveCategory={handleActiveCategory}
+        />
+          <Content 
+            items={myStashInventory}
+            activeCategory={activeCategory}
+        />
       </div>
     )
 };

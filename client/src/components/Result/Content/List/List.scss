@@ -2,8 +2,15 @@
     list-style-type: none;
     margin: 0 auto;
     padding: 0;
-    display: flex;
-    flex-flow: column nowrap;
+    // flex-flow: column nowrap;
+    // display: flex;
+    position: relative;
+    max-height: 0px;
+    overflow: hidden;
+
+    &.is-active {
+        max-height: 1000000px;
+    }
 }
 
 .listitem {
@@ -17,6 +24,13 @@
         display: flex;
         align-items: center;
         flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+
+    &__info {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
     }
 
     &__title {
@@ -29,8 +43,13 @@
         margin-right: 12px;
     }
 
+    &__values {
+        margin-left: auto;
+        margin-right: 24px;
+    }
+
     &__value {
-        margin-left: 10px;
+        margin-right: 16px;
     }
 
     &__toggle {
