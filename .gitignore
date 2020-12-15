@@ -8,7 +8,6 @@ yarn-error.log
 client/node_modules
 
 # Editor directories and files
-*.json
 .idea
 *.suo
 *.ntvs*
