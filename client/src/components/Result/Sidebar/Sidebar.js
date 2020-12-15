@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './sidebar.scss';
 
 const Sidebar = (props) => {
@@ -14,6 +14,8 @@ const Sidebar = (props) => {
     else {
         const myStashInventory = props.items;
         const myStashInventoryArray = Object.keys(myStashInventory);
+        let firstCategory;
+        
         sidebar = myStashInventoryArray.map((category) => {
             return(
                 <li key={category} className="sidebar-list__item">

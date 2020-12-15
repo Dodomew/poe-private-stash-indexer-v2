@@ -22,7 +22,27 @@
         display: flex;
         align-items: center;
         flex-flow: row nowrap;
-        justify-content: space-between;
+    }
+
+    &__intro {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+    }
+
+    &__currency-icon {
+        width: 30px;
+        height: auto;
+        margin-left: 8px;
+    }
+
+    &__total {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        flex: 0 0 25%;
+        margin-left: auto;
+        border-left: 1px solid #5a5a5a;
     }
 
     &__info {
@@ -41,31 +61,21 @@
         margin-right: 12px;
     }
 
-    &__values {
-        margin-left: auto;
-        margin-right: 24px;
-    }
-
     &__value {
-        margin-right: 16px;
-    }
+        margin-left: 16px;
 
-    &__toggle {
-        margin-left: auto;
+        &--total {
+            margin-left: auto;
+        }
     }
 
     &__accordion { 
         list-style-type: none;
-        // max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s;
 
         .is-closed & {
             max-height: 0px;
         }
-
-        // .is-expanded & {
-        //     max-height: 200px;
-        // }
     }
 }

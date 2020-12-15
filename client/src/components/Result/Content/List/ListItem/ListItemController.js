@@ -41,7 +41,7 @@ const ListItemController = (props) => {
     const accordionToggle = itemMods ?
         <button className="listitem__toggle"
                 onClick={toggleAccordion}>
-            Klik
+            Toggle
         </button>
     : null;
 

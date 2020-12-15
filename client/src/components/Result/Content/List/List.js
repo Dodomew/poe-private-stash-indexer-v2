@@ -5,12 +5,6 @@ import './List.scss';
 const List = (props) => {
     let listItems;
 
-    useEffect(() => {
-        if(!props.activeCategory) {
-            console.log('i render now')
-        }
-    }, [])
-
     if(props.isLoading) {
         listItems = [];
         for (let i = 0; i < 8; i++) {
@@ -35,7 +29,7 @@ const List = (props) => {
 
     return (
         <ul 
-            className={'list' + (props.isLoading ? ' is-loading' : '') + (props.activeCategory === props.category ? ' is-active' : "")} 
+            className={'js-list list' + (props.isLoading ? ' is-loading' : '') + (props.activeCategory === props.category ? ' is-active' : "")} 
             data-category={props.category}
         >
             {listItems}

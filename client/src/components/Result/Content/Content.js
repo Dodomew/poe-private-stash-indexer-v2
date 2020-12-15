@@ -18,7 +18,7 @@ const Content = (props) => {
                     category={category} 
                     items={myStashInventory[category]} 
                     isLoading={false}
-                    activeCategory={props.activeCategory}
+                    activeCategory={props.activeCategory ?? category}
                 />
             )
         });
