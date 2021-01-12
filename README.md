@@ -1,7 +1,7 @@
 # PoE Private Stash Indexer
 https://poe-private-stash-indexer.herokuapp.com/
 
-This is an app which fetches your account's Softcore Trade inventory and requests for most of those items their current worth from PoeNinja ( https://poe.ninja/ )
+This is an app which fetches your account's current league Softcore Trade (e.g. Harvest SC) inventory and requests for most of those items their current worth from PoeNinja ( https://poe.ninja/ ). Currently no support for Standard.
 
 The project is built on `Node JS` for the backend and `ReactJS` for the frontend, with SASS for CSS.
 The Node server is set up to work like an RESTapi for the frontend. 
