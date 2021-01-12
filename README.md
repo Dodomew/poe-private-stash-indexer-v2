@@ -1,56 +1,21 @@
-# create-react-app React Project with Node Express Backend
+# PoE Private Stash Indexer
+
+https://poe-private-stash-indexer.herokuapp.com/
+
+This is an app which fetches your account's Softcore Trade inventory and requests for most of those items their current worth from PoeNinja ( https://poe.ninja/ )
+
+The project is built on `Node JS` for the backend and `ReactJS` for the frontend, with SASS for CSS.
+The Node server is set up to work like an RESTapi for the frontend. 
+
+You log in using your POESESSIONID (cookie value) from https://www.pathofexile.com and your account name. 
+
+When you log in, these things happen:
+1) The server requests your account info from https://www.pathofexile.com ( see `getAccountInventory.js` )
+2) When the server gets the data back, it will pass it to the Frontend ( see `server.js` and `AppController.js` )
+3) The Frontend categorizes all the items. Some items will be skipped, because they are hard to assign a value to, e.g. items with mods, like weapons or jewels. ( see `categorizeItems.js`)
+4) Requests go out to PoeNinja for each category, like currency, fragments etc. PoeNinja orders their data per category, so I have to match the categories that PoeNinja uses so I can fetch the correct category. ( see `getPricesPerCategoryFromPoeNinja.js`)
+5) Now I have the PoeNinja values and I must match them with the items fetched from PoE. ( see `StashHandler.js` )
+6) When this is done, the values, like item title and chaos worth gets rendered by React components. ( see `Content.js` and `Sidebar.js`)
+
+### create-react-app React Project with Node Backend
 https://www.freecodecamp.org/news/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0/
-
-> Example on using create-react-app with a Node Express Backend
-
-## Usage
-
-Install [nodemon](https://github.com/remy/nodemon) globally
-
-```
-npm i nodemon -g
-```
-
-Install server and client dependencies
-
-```
-yarn
-cd client
-yarn
-```
-
-To start the server and client at the same time (from the root of the project)
-
-```
-yarn dev
-```
-
-Running the production build on localhost. This will create a production build, then Node will serve the app on http://localhost:5000
-
-```
-NODE_ENV=production yarn dev:server
-```
-
-## How this works
-
-The key to use an Express backend with a project created with `create-react-app` is on using a **proxy**. We have a _proxy_ entry in `client/package.json`
-
-```
-"proxy": "http://localhost:5000/"
-```
-
-This tells Webpack development server to proxy our API requests to our API server, given that our Express server is running on **localhost:5000**
-
-## Tutorial
-
-Visit my [blog post](https://medium.freecodecamp.org/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0) entry for a detailed step-by-step guide.
-
-[Deployed app](https://cra-express.herokuapp.com/)
-
-## Giving Back
-
-If you would like to support my work and the time I put in making tutorials, you can click the image below to get me a coffee. I would really appreciate it (but is not required).
-
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/esausilva)
-
--Esau
